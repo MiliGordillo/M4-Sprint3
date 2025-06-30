@@ -41,47 +41,53 @@ const categories = [
 ];
 
 function ProductList({ onAddToCart, selectedCategory }) {
-	const { darkMode } = useContext(ThemeContext);
+    const { darkMode } = useContext(ThemeContext);
 
-	const category = categories.find(cat => cat.name === selectedCategory);
+    const category = categories.find(cat => cat.name === selectedCategory);
 
-	if (!category) return null;
+    if (!category) return null;
 
-	return (
-		<div className="p-4 space-y-8">
-			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-				{category.products.map((product) => (
-					<div
-						key={product.id}
-						className={
-							"rounded-xl shadow-lg p-4 flex flex-col items-center " +
-							(darkMode ? "bg-purple-800 text-yellow-300" : "bg-purple-300 text-purple-900")
-						}
-						style={{ maxWidth: "270px", margin: "0 auto" }}
-					>
-						<img
-							src={product.image}
-							alt={product.name}
-							className="w-28 h-28 object-cover mb-3 rounded-lg"
-						/>
-						<h3 className="text-lg font-semibold mb-1 text-center">{product.name}</h3>
-						<p className="text-xl font-bold mb-3">${product.price}</p>
-						<button
-							className={
-								"px-4 py-2 rounded font-bold text-base transition " +
-								(darkMode
-									? "bg-yellow-300 text-purple-900 hover:bg-yellow-200"
-									: "bg-purple-700 text-yellow-300 hover:bg-purple-800")
-							}
-							onClick={() => onAddToCart(product)}
-						>
-							Agregar al carrito
-						</button>
-					</div>
-				))}
-			</div>
-		</div>
-	);
+    // Mostrar solo 4 productos en móvil (2 filas de 2)
+    const isMobile = window.innerWidth < 640;
+    const productsToShow = isMobile
+        ? category.products.slice(0, 4)
+        : category.products;
+
+    return (
+        <div className="p-4 space-y-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {productsToShow.map((product) => (
+                    <div
+                        key={product.id}
+                        className={
+                            "rounded-xl shadow-lg p-4 flex flex-col items-center " +
+                            (darkMode ? "bg-purple-800 text-yellow-300" : "bg-purple-300 text-purple-900")
+                        }
+                        style={{ maxWidth: "270px", margin: "0 auto" }}
+                    >
+                        <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-28 h-28 object-cover mb-3 rounded-lg"
+                        />
+                        <h3 className="text-lg font-semibold mb-1 text-center">{product.name}</h3>
+                        <p className="text-xl font-bold mb-3">${product.price}</p>
+                        <button
+                            className={
+                                "px-4 py-2 rounded font-bold text-base transition " +
+                                (darkMode
+                                    ? "bg-yellow-300 text-purple-900 hover:bg-yellow-200"
+                                    : "bg-purple-700 text-yellow-300 hover:bg-purple-800")
+                            }
+                            onClick={() => onAddToCart(product)}
+                        >
+                            Agregar al carrito
+                        </button>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export const categoryNames = categories.map(cat => cat.name);
