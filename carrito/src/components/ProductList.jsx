@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
 const categories = [
@@ -42,13 +42,18 @@ const categories = [
 
 function ProductList({ onAddToCart, selectedCategory }) {
     const { darkMode } = useContext(ThemeContext);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 640);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const category = categories.find(cat => cat.name === selectedCategory);
 
     if (!category) return null;
 
-    // Mostrar solo 4 productos en móvil (2 filas de 2)
-    const isMobile = window.innerWidth < 640;
     const productsToShow = isMobile
         ? category.products.slice(0, 4)
         : category.products;
