@@ -2,7 +2,7 @@ import Header from "./components/Header";
 import ProductList, { categoryNames } from "./components/ProductList";
 import Cart from "./components/Cart";
 import Footer from "./components/Footer";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { ThemeContext } from "./context/ThemeContext";
 import { CartContext } from "./context/CartContext";
 
@@ -11,10 +11,14 @@ const App = () => {
   const { cart, addToCart } = useContext(CartContext);
   const [cartOpen, setCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(categoryNames[0]);
+  const [animateCartBtn, setAnimateCartBtn] = useState(false);
+  const cartBtnRef = useRef(null);
 
   const handleAddToCart = (product) => {
     addToCart(product);
-    setCartOpen(true);
+    // Animación del botón "Ver carrito"
+    setAnimateCartBtn(true);
+    setTimeout(() => setAnimateCartBtn(false), 700); // Duración de la animación
   };
 
   return (
@@ -44,12 +48,14 @@ const App = () => {
         <Cart open={cartOpen} setOpen={setCartOpen} />
         {cart.length > 0 && !cartOpen && (
           <button
+            ref={cartBtnRef}
             onClick={() => setCartOpen(true)}
             className={
-              "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 mb-24 px-4 py-2 sm:px-6 sm:py-3 rounded-full shadow-lg z-50 animate-bounce font-bold text-base transition " +
+              "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 mb-24 px-4 py-2 sm:px-6 sm:py-3 rounded-full shadow-lg z-50 font-bold text-base transition " +
               (darkMode
                 ? "bg-yellow-300 text-purple-900 hover:bg-yellow-200"
-                : "bg-purple-700 text-yellow-300 hover:bg-purple-800")
+                : "bg-purple-700 text-yellow-300 hover:bg-purple-800") +
+              (animateCartBtn ? " animate-bounce" : "")
             }
             style={{ pointerEvents: "auto" }}
           >
