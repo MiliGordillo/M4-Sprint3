@@ -59,7 +59,7 @@ function ProductList({ onAddToCart, selectedCategory }) {
         : category.products;
 
     return (
-        <div className="p-4 space-y-8">
+        <div className="p-2 sm:p-4 space-y-8">
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {productsToShow.map((product) => (
                     <div

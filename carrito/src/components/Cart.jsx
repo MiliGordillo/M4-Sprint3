@@ -9,11 +9,10 @@ const Cart = ({ open, setOpen }) => {
   return (
     <div
       className={
-        "fixed top-0 right-0 h-full w-80 max-w-full z-40 transition-transform duration-300 " +
+        "fixed top-0 right-0 h-full w-full max-w-xs sm:w-96 sm:max-w-md z-40 transition-transform duration-300 " +
         (open ? "translate-x-0" : "translate-x-full") +
         " shadow-lg " +
-        (darkMode ? "bg-purple-900 text-yellow-300" : "bg-white text-purple-900") +
-        " sm:w-96 sm:max-w-md w-full max-w-xs"
+        (darkMode ? "bg-purple-900 text-yellow-300" : "bg-white text-purple-900")
       }
     >
       <button
@@ -22,7 +21,7 @@ const Cart = ({ open, setOpen }) => {
       >
         ×
       </button>
-      <div className="p-4 pt-12 sm:p-6">
+      <div className="p-2 pt-12 sm:p-6">
         <h2 className="text-xl sm:text-2xl font-bold mb-4 text-yellow-300">Carrito</h2>
         {cart.length === 0 ? (
           <p className="text-gray-500 italic">El carrito está vacío.</p>

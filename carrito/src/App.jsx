@@ -46,7 +46,7 @@ const App = () => {
           <button
             onClick={() => setCartOpen(true)}
             className={
-              "fixed bottom-6 right-6 mb-24 px-6 py-3 rounded-full shadow-lg z-50 animate-bounce font-bold text-base transition " +
+              "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 mb-24 px-4 py-2 sm:px-6 sm:py-3 rounded-full shadow-lg z-50 animate-bounce font-bold text-base transition " +
               (darkMode
                 ? "bg-yellow-300 text-purple-900 hover:bg-yellow-200"
                 : "bg-purple-700 text-yellow-300 hover:bg-purple-800")
